@@ -1,0 +1,6 @@
+track,company,contact_name,title,linkedin_url,location,source,notes
+MA,BNP Paribas,Camille Durand,M&A Associate,https://www.linkedin.com/in/example1,Paris,LinkedIn,"Profil trouvé via recherche M&A Paris"
+MA,Rothschild & Co,Jean Martin,Investment Banking Analyst - M&A,https://www.linkedin.com/in/example2,Paris,LinkedIn,"Cible banque"
+TT,Deloitte,Marie Kouadio,Transaction Tax Manager,https://www.linkedin.com/in/example3,Paris,LinkedIn,"Tax TS/TT"
+TS,EY,Pierre N'Dri,Transaction Services Senior,https://www.linkedin.com/in/example4,Paris,LinkedIn,"TS équipe Deals"
+MA,Corporate ABC,Sarah Traoré,Corporate Development Associate,https://www.linkedin.com/in/example5,Île-de-France,LinkedIn,"Corporate"
