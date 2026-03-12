@@ -25,4 +25,4 @@ Copilote de prospection (M&A / Transaction Services / Transaction Tax) orienté 
 ```bash
 uv init
 uv venv
-uv add "autogen-agentchat==0.5.1" "autogen-ext[openai]==0.5.1" python-dotenv pandas pydantic rich
+uv add "autogen-agentchat==0.5.1" "autogen-ext[openai]==0.5.1" python-dotenv pandas pydantic rich# maeva_prospect_engine
