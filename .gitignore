@@ -19,3 +19,28 @@ data/
 # Samples versionnables (OK)
 !samples/
 !samples/**
+
+# Sensitive logs / outputs
+data/conversations/
+data/conversations/*.md
+out/
+# Secrets
+.env
+*.env
+
+# Virtual env / caches
+.venv/
+__pycache__/
+*.pyc
+
+# Runtime outputs (on garde les dossiers, pas les fichiers)
+out/*
+!out/.gitkeep
+
+data/*
+!data/.gitkeep
+!data/inbox/
+!data/inbox/.gitkeep
+!data/inbox/leads_sample.csv
+!data/conversations/
+!data/conversations/.gitkeep
