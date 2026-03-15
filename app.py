@@ -4,6 +4,41 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+
+# --- UI helpers (robust widgets) ---
+def safe_slider(*args, **kwargs):
+    """Streamlit slider wrapper: évite le crash quand min_value == max_value."""
+    import streamlit as st
+
+    min_v = kwargs.get("min_value")
+    max_v = kwargs.get("max_value")
+    key = kwargs.get("key", None)
+
+    # Cas pathologique: 0 ou 1 valeur possible -> slider impossible
+    if min_v is not None and max_v is not None and max_v <= min_v:
+        v = kwargs.get("value", max_v)
+        # Range slider
+        if isinstance(v, (list, tuple)):
+            v = max_v
+        v = int(max_v)
+
+        # Affiche une valeur figée (au lieu de planter)
+        label = args[0] if args else kwargs.get("label", "Value")
+        try:
+            return st.number_input(
+                label,
+                min_value=v,
+                max_value=v,
+                value=v,
+                step=1,
+                key=key,
+            )
+        except TypeError:
+            # Fallback si disabled/params non supportés selon version
+            return st.number_input(label, min_value=v, max_value=v, value=v, step=1, key=key)
+
+    return st.slider(*args, **kwargs)
+
 # --- Cloud bootstrap (ensure folders exist) ---
 from pathlib import Path
 for d in ["data", "data/inbox", "data/conversations", "out"]:
@@ -243,7 +278,7 @@ with tab2:
         st.markdown("---")
         st.subheader("Quick Actions (par ligne)")
 
-        max_rows = st.slider(
+        max_rows = safe_slider(
             "Nombre de leads pour actions rapides",
             min_value=1,
             max_value=min(30, int(len(view))) if len(view) else 1,

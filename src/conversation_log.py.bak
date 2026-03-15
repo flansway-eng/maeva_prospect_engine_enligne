@@ -1,0 +1,45 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from typing import Any, Dict, Optional
+
+BASE_DIR = Path("data/conversations")
+
+
+def _now() -> str:
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
+def ensure_dir() -> None:
+    BASE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def log_event(
+    lead_id: str,
+    event: str,
+    summary: str,
+    payload: Optional[Dict[str, Any]] = None,
+) -> Path:
+    """
+    Append-only Markdown log per lead.
+    """
+    ensure_dir()
+    f = BASE_DIR / f"{lead_id}.md"
+
+    lines = []
+    lines.append(f"## {_now()} — {event}\n")
+    lines.append(summary.strip() + "\n\n")
+
+    if payload:
+        lines.append("**Payload (résumé):**\n\n")
+        for k, v in payload.items():
+            vv = str(v)
+            if len(vv) > 1500:
+                vv = vv[:1500] + "…"
+            lines.append(f"- `{k}`: {vv}\n")
+        lines.append("\n")
+
+    f.write_text((f.read_text(encoding="utf-8") if f.exists() else "") + "".join(lines), encoding="utf-8")
+    return f

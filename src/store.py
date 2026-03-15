@@ -105,3 +105,15 @@ def ingest_leads_csv(path: str) -> Tuple[pd.DataFrame, int]:
         save_pipeline(pipeline)
 
     return pipeline, len(new_rows)
+
+def append_event_bulk(rows: list[tuple[str, str, str]]) -> None:
+    """
+    rows: [(lead_id, event, details), ...]
+    """
+    init_storage()
+    df = pd.read_csv(EVENTS_PATH)
+    from datetime import date
+    today = date.today().isoformat()
+    for lead_id, event, details in rows:
+        df.loc[len(df)] = [today, lead_id, event, details]
+    df.to_csv(EVENTS_PATH, index=False)
